@@ -1,0 +1,54 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests", "docker:pinDigests"],
+  "schedule": ["before 6am on monday"],
+  "timezone": "Asia/Manila",
+  "minimumReleaseAge": "14 days",
+  "rangeStrategy": "pin",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
+  "packageRules": [
+    {
+      "groupName": "Next.js and React",
+      "matchPackageNames": [
+        "next",
+        "eslint-config-next",
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom"
+      ]
+    },
+    {
+      "groupName": "Testing tools",
+      "matchPackageNames": [
+        "vitest",
+        "@vitest/**",
+        "@testing-library/**",
+        "msw",
+        "jsdom",
+        "@playwright/test",
+        "playwright-core",
+        "@axe-core/playwright"
+      ],
+      "description": "playwright-core is pinned in package.json overrides; keep it in step with @playwright/test."
+    },
+    {
+      "groupName": "Storybook",
+      "matchPackageNames": ["storybook", "@storybook/**", "eslint-plugin-storybook"]
+    },
+    {
+      "groupName": "Lint and format",
+      "matchPackageNames": [
+        "eslint",
+        "prettier",
+        "prettier-plugin-tailwindcss",
+        "@commitlint/**",
+        "husky",
+        "lint-staged"
+      ]
+    }
+  ]
+}
