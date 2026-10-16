@@ -4,7 +4,7 @@ import { useActionState } from 'react';
 
 import { Button, TextAreaField, TextField } from '@/shared/ui';
 import { submitContact } from '../actions';
-import { initialContactState } from '../schema';
+import { initialContactState } from '../state';
 
 export function ContactForm() {
   const [state, formAction, pending] = useActionState(submitContact, initialContactState);

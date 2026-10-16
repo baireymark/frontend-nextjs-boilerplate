@@ -3,7 +3,8 @@
 import { z } from 'zod';
 
 import { parseServerEnv } from '@/config/env';
-import { contactSchema, type ContactFormState } from './schema';
+import { contactSchema } from './schema';
+import type { ContactFormState } from './state';
 
 /**
  * Validates the contact form on the server. Client-side checks are a

@@ -1,4 +1,4 @@
-import type { z } from 'zod';
+import { safeParse, type $ZodType } from 'zod/v4/core';
 
 export class HttpError extends Error {
   constructor(
@@ -19,11 +19,12 @@ function resolveUrl(path: string): string {
 
 /**
  * Fetches JSON and validates it against a Zod schema, so a changed API shape
- * fails loudly at the boundary instead of deep inside a component.
+ * fails loudly at the boundary instead of deep inside a component. Accepts
+ * both zod and zod/mini schemas; browser code should pass zod/mini ones.
  */
 export async function fetchJson<T>(
   path: string,
-  schema: z.ZodType<T>,
+  schema: $ZodType<T>,
   init?: RequestInit,
 ): Promise<T> {
   const response = await fetch(resolveUrl(path), {
@@ -38,7 +39,7 @@ export async function fetchJson<T>(
     );
   }
 
-  const result = schema.safeParse(await response.json());
+  const result = safeParse(schema, await response.json());
   if (!result.success) {
     throw new Error(`Unexpected response shape from ${path}`, { cause: result.error });
   }

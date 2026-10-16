@@ -24,6 +24,18 @@ export const test = base.extend<Fixtures>({
         violations.push(message.text());
       }
     });
+    // A violation the page catches (such as a library probing for eval) never
+    // reaches the console, but the browser still fires this event for it.
+    await page.exposeFunction('reportCspViolation', (violation: string) => {
+      violations.push(violation);
+    });
+    await page.addInitScript(() => {
+      document.addEventListener('securitypolicyviolation', (event) => {
+        const report = (window as unknown as { reportCspViolation: (v: string) => void })
+          .reportCspViolation;
+        report(`${event.violatedDirective} blocked ${event.blockedURI}`);
+      });
+    });
     await use(violations);
   },
 });

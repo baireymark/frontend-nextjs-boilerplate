@@ -3,7 +3,7 @@
 This walkthrough adds a feature called `invoices`. Copy the pattern from `features/contact` (Server Action) or `features/status` (client data fetching).
 
 1. Create the folder `features/invoices/` with these files as needed:
-   - `schema.ts` for Zod schemas and the types inferred from them
+   - `schema.ts` for Zod schemas and the types inferred from them. Client components must not import a file that uses classic `zod`; use `zod/mini` for schemas that run in the browser (see `shared/api/schemas.ts`)
    - `actions.ts` for Server Actions, starting with `'use server'`
    - `api.ts` for TanStack Query hooks and query keys
    - `store.ts` for a Zustand store, only if several components share UI state

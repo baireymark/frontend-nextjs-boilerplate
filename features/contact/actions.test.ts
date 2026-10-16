@@ -1,5 +1,5 @@
 import { submitContact } from './actions';
-import { initialContactState } from './schema';
+import { initialContactState } from './state';
 
 function form(values: Record<string, string>): FormData {
   const data = new FormData();

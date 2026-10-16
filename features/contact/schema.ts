@@ -11,14 +11,3 @@ export const contactSchema = z.object({
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;
-
-export type ContactFormState =
-  | { status: 'idle' }
-  | { status: 'success'; message: string }
-  | {
-      status: 'error';
-      message: string;
-      fieldErrors?: Partial<Record<keyof ContactInput, string[]>>;
-    };
-
-export const initialContactState: ContactFormState = { status: 'idle' };

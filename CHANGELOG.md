@@ -14,3 +14,13 @@ All notable changes to this project are documented here. The format follows [Kee
 - ESLint module-boundary rules, Prettier, Husky, lint-staged, and commitlint.
 - Storybook with the accessibility add-on.
 - GitHub Actions CI, Lighthouse CI budgets, Renovate, and a Dockerfile for self-hosting.
+- App icon, so browsers no longer request a missing `/favicon.ico`.
+
+### Changed
+
+- The Lighthouse JavaScript budget is 190 KB instead of 170 KB, to fit browser-side response validation with `zod/mini`.
+
+### Fixed
+
+- Classic Zod no longer ships to the browser. It added about 90 KB of JavaScript and triggered a CSP `eval` violation. Browser-side schemas now use `zod/mini`.
+- The E2E CSP check now also catches violations that page code handles without logging an error.

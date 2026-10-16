@@ -22,6 +22,7 @@ flowchart TD
 - Pages are Server Components by default. Add `'use client'` only to components that need state, effects, or browser APIs.
 - Writes go through Server Actions, which validate input with Zod. The server is the trust boundary; client checks are a convenience.
 - Client-side reads use TanStack Query through `shared/api/http.ts`, which validates every response against a Zod schema.
+- Schemas that run in the browser use `zod/mini`. Classic `zod` adds about 90 KB of compressed JavaScript and probes for `eval`, which the Content Security Policy reports as a violation. Keep classic `zod` in server-only code such as Server Actions and `config/env.ts`.
 - Shared UI state lives in small Zustand stores inside the feature that owns it.
 
 ## Security
@@ -46,4 +47,4 @@ Unit tests fail on any network request that is not mocked.
 
 ## Performance budgets
 
-Lighthouse CI runs on the home and dashboard routes with the default mobile profile and fails the build when a budget is exceeded: LCP 2.5 s, CLS 0.1, Total Blocking Time 200 ms, and 170 KB of compressed JavaScript. Interaction to Next Paint can only be measured with real users, so Total Blocking Time stands in for it in the lab; track INP in production monitoring.
+Lighthouse CI runs on the home and dashboard routes with the default mobile profile and fails the build when a budget is exceeded: LCP 2.5 s, CLS 0.1, Total Blocking Time 200 ms, and 190 KB of compressed JavaScript. React and the Next.js runtime take about 140 KB of the JavaScript budget, which leaves about 50 KB for application code. Interaction to Next Paint can only be measured with real users, so Total Blocking Time stands in for it in the lab; track INP in production monitoring.
